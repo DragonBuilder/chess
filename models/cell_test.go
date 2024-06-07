@@ -8,7 +8,7 @@ import (
 
 func TestCell_NeighbourAt(t *testing.T) {
 	b := NewBoard()
-	assert.Equal(t, "F6", b.CellAt("F5").NeighbourAt(NORTH).Position)
+	assert.Equal(t, "F6", b.CellAt("F5").NeighbourAt(NORTH).Position())
 }
 
 func TestCell_NeighbourAt_when_PositionIsInvalid_then_ReturnNil(t *testing.T) {

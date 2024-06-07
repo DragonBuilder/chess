@@ -12,3 +12,9 @@ const (
 	WEST
 	NORTH_WEST
 )
+
+type PieceKind int
+
+const (
+	PAWN PieceKind = 1
+)

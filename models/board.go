@@ -23,12 +23,17 @@ func (b *board) CellAt(pos string) *cell {
 	return b.cells[pos]
 }
 
+func (b *board) Put(piece *Piece, pos string) {
+	cell := b.CellAt(pos)
+	piece.PutOn(cell)
+}
+
 func (b *board) populateCells() {
 	for i := 1; i <= 8; i++ {
 		for j := 'A'; j <= 'H'; j++ {
 			position := string(j) + strconv.Itoa(i)
 			b.cells[position] = &cell{
-				Position:   position,
+				pos:        position,
 				neighbours: make(map[Direction]*cell),
 			}
 		}
@@ -49,8 +54,8 @@ func (b *board) linkCells() {
 }
 
 func (b *board) linkNorth(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 	northPos := string(col) + string(row+1)
 
 	if northCell, ok := b.cells[northPos]; ok {
@@ -59,8 +64,8 @@ func (b *board) linkNorth(c *cell) {
 }
 
 func (b *board) linkNorthEast(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	nwPos := string(col+1) + string(row+1)
 	if nwCell, ok := b.cells[nwPos]; ok {
@@ -69,8 +74,8 @@ func (b *board) linkNorthEast(c *cell) {
 }
 
 func (b *board) linkEast(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col+1) + string(row)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
@@ -79,8 +84,8 @@ func (b *board) linkEast(c *cell) {
 }
 
 func (b *board) linkSouthEast(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col+1) + string(row-1)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
@@ -89,8 +94,8 @@ func (b *board) linkSouthEast(c *cell) {
 }
 
 func (b *board) linkSouth(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col) + string(row-1)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
@@ -99,8 +104,8 @@ func (b *board) linkSouth(c *cell) {
 }
 
 func (b *board) linkSouthWest(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col-1) + string(row-1)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
@@ -109,8 +114,8 @@ func (b *board) linkSouthWest(c *cell) {
 }
 
 func (b *board) linkWest(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col-1) + string(row)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
@@ -119,8 +124,8 @@ func (b *board) linkWest(c *cell) {
 }
 
 func (b *board) linkNorthWest(c *cell) {
-	col := c.Position[0]
-	row := c.Position[1]
+	col := c.pos[0]
+	row := c.pos[1]
 
 	neighbourPos := string(col-1) + string(row+1)
 	if neighbourCell, ok := b.cells[neighbourPos]; ok {
