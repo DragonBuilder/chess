@@ -1,12 +1,7 @@
 package models
 
 type Piece interface {
-	UID() int
-}
-
-type Pawn struct {
-}
-
-func (p Pawn) UID() int {
-	return PAWN
+	// UID() int
+	// Position(string)
+	// NextPossibleMoves() []string
 }

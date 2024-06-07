@@ -1,74 +1,129 @@
 package models
 
 import (
-	"fmt"
 	"strconv"
-	"strings"
-)
-
-const dimension = 8
-
-const (
-	PAWN  int = 1
-	KING  int = 2
-	QUEEN int = 3
 )
 
 type board struct {
-	cells [][]int
+	cells map[string]*cell
 }
 
 func NewBoard() *board {
-	cells := make([][]int, dimension)
-
-	for i := range cells {
-		cells[i] = make([]int, dimension)
+	b := &board{
+		cells: make(map[string]*cell),
 	}
 
-	return &board{
-		cells: cells,
+	b.populateCells()
+	b.linkCells()
+
+	return b
+}
+
+func (b *board) CellAt(pos string) *cell {
+	return b.cells[pos]
+}
+
+func (b *board) populateCells() {
+	for i := 1; i <= 8; i++ {
+		for j := 'A'; j <= 'H'; j++ {
+			position := string(j) + strconv.Itoa(i)
+			b.cells[position] = &cell{
+				Position:   position,
+				neighbours: make(map[Direction]*cell),
+			}
+		}
 	}
 }
 
-func (b *board) Put(p Piece, pos string) error {
-	pos = strings.ToUpper(pos)
-
-	if err := b.validate(pos); err != nil {
-		return err
+func (b *board) linkCells() {
+	for _, cell := range b.cells {
+		b.linkNorth(cell)
+		b.linkNorthEast(cell)
+		b.linkEast(cell)
+		b.linkSouthEast(cell)
+		b.linkSouth(cell)
+		b.linkSouthWest(cell)
+		b.linkWest(cell)
+		b.linkNorthWest(cell)
 	}
-
-	letter := rune(pos[0])
-	num, _ := strconv.ParseInt(string(pos[1]), 10, 0)
-
-	row, col := b.indexOf(letter, int(num))
-	b.cells[row][col] = p.UID()
-	return nil
 }
 
-func (b *board) validate(pos string) error {
-	if len(pos) != 2 {
-		return fmt.Errorf("invalid position format: %s", pos)
-	}
+func (b *board) linkNorth(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+	northPos := string(col) + string(row+1)
 
-	if !(pos[0] >= 'A' && pos[0] <= 'H') {
-		return fmt.Errorf("invalid position first character: %s", pos)
+	if northCell, ok := b.cells[northPos]; ok {
+		c.neighbours[NORTH] = northCell
 	}
-
-	num, err := strconv.ParseInt(string(pos[1]), 10, 0)
-	if err != nil {
-		return fmt.Errorf("invalid position second character type, expected an int: %s : %v", pos, err)
-	}
-
-	if !(num >= 1 && num <= 8) {
-		return fmt.Errorf("invalid position second character: %s", pos)
-	}
-
-	return nil
 }
 
-func (b *board) indexOf(posLetter rune, posInt int) (int, int) {
-	row := int(posLetter - 65)
-	col := posInt - 1
+func (b *board) linkNorthEast(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
 
-	return row, col
+	nwPos := string(col+1) + string(row+1)
+	if nwCell, ok := b.cells[nwPos]; ok {
+		c.neighbours[NORTH_EAST] = nwCell
+	}
+}
+
+func (b *board) linkEast(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col+1) + string(row)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[EAST] = neighbourCell
+	}
+}
+
+func (b *board) linkSouthEast(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col+1) + string(row-1)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[SOUTH_EAST] = neighbourCell
+	}
+}
+
+func (b *board) linkSouth(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col) + string(row-1)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[SOUTH] = neighbourCell
+	}
+}
+
+func (b *board) linkSouthWest(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col-1) + string(row-1)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[SOUTH_WEST] = neighbourCell
+	}
+}
+
+func (b *board) linkWest(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col-1) + string(row)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[WEST] = neighbourCell
+	}
+}
+
+func (b *board) linkNorthWest(c *cell) {
+	col := c.Position[0]
+	row := c.Position[1]
+
+	neighbourPos := string(col-1) + string(row+1)
+	if neighbourCell, ok := b.cells[neighbourPos]; ok {
+		c.neighbours[NORTH_WEST] = neighbourCell
+	}
 }
