@@ -1,16 +1,17 @@
-package models
+package models_test
 
 import (
 	"reflect"
 	"testing"
 
+	"github.com/DragonBuilder/chess/models"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPiece_NextPossibleMoves(t *testing.T) {
-	b := NewBoard()
+	b := models.NewBoard()
 
-	pawn := NewPawn(true)
+	pawn := models.NewPawn(true)
 
 	b.Put(pawn, "C5")
 

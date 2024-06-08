@@ -1,16 +1,16 @@
 package models
 
-type cell struct {
+type Cell struct {
 	Piece *Piece
 
 	pos        string
-	neighbours map[Direction]*cell
+	neighbours map[Direction]*Cell
 }
 
-func (c *cell) Position() string {
+func (c *Cell) Position() string {
 	return c.pos
 }
 
-func (c *cell) NeighbourAt(dir Direction) *cell {
+func (c *Cell) NeighbourAt(dir Direction) *Cell {
 	return c.neighbours[dir]
 }

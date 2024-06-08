@@ -1,13 +1,13 @@
 package models
 
 type PieceNextMovePossibilitiesFinder interface {
-	Find(piece *Piece) []*cell
+	Find(piece *Piece) []*Cell
 }
 
 type PawnNextMovesFinder struct{}
 
-func (p PawnNextMovesFinder) Find(piece *Piece) []*cell {
-	result := make([]*cell, 0)
+func (p PawnNextMovesFinder) Find(piece *Piece) []*Cell {
+	result := make([]*Cell, 0)
 	if nc := piece.CurrentCell().NeighbourAt(piece.Facing()); nc != nil {
 		result = append(result, nc)
 	}
@@ -16,8 +16,8 @@ func (p PawnNextMovesFinder) Find(piece *Piece) []*cell {
 
 type KingNextMovesFinder struct{}
 
-func (p KingNextMovesFinder) Find(piece *Piece) []*cell {
-	result := make([]*cell, 0)
+func (p KingNextMovesFinder) Find(piece *Piece) []*Cell {
+	result := make([]*Cell, 0)
 	if nc := piece.CurrentCell().NeighbourAt(NORTH); nc != nil {
 		result = append(result, nc)
 	}
@@ -47,8 +47,8 @@ func (p KingNextMovesFinder) Find(piece *Piece) []*cell {
 
 type QueenNextMovesFinder struct{}
 
-func (p QueenNextMovesFinder) Find(piece *Piece) []*cell {
-	result := make([]*cell, 0)
+func (p QueenNextMovesFinder) Find(piece *Piece) []*Cell {
+	result := make([]*Cell, 0)
 
 	result = append(result, cellsTillEdgeInDirection(NORTH, piece.CurrentCell())...)
 	result = append(result, cellsTillEdgeInDirection(NORTH_EAST, piece.CurrentCell())...)
@@ -62,8 +62,8 @@ func (p QueenNextMovesFinder) Find(piece *Piece) []*cell {
 	return result
 }
 
-func cellsTillEdgeInDirection(dir Direction, fromCell *cell) []*cell {
-	result := make([]*cell, 0)
+func cellsTillEdgeInDirection(dir Direction, fromCell *Cell) []*Cell {
+	result := make([]*Cell, 0)
 	current := fromCell
 	for current.NeighbourAt(dir) != nil {
 		current = current.NeighbourAt(dir)

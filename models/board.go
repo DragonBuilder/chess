@@ -5,12 +5,12 @@ import (
 )
 
 type board struct {
-	cells map[string]*cell
+	cells map[string]*Cell
 }
 
 func NewBoard() *board {
 	b := &board{
-		cells: make(map[string]*cell),
+		cells: make(map[string]*Cell),
 	}
 
 	b.populateCells()
@@ -19,7 +19,7 @@ func NewBoard() *board {
 	return b
 }
 
-func (b *board) CellAt(pos string) *cell {
+func (b *board) CellAt(pos string) *Cell {
 	return b.cells[pos]
 }
 
@@ -32,9 +32,9 @@ func (b *board) populateCells() {
 	for i := 1; i <= 8; i++ {
 		for j := 'A'; j <= 'H'; j++ {
 			position := string(j) + strconv.Itoa(i)
-			b.cells[position] = &cell{
+			b.cells[position] = &Cell{
 				pos:        position,
-				neighbours: make(map[Direction]*cell),
+				neighbours: make(map[Direction]*Cell),
 			}
 		}
 	}
@@ -53,7 +53,7 @@ func (b *board) linkCells() {
 	}
 }
 
-func (b *board) linkNorth(c *cell) {
+func (b *board) linkNorth(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 	northPos := string(col) + string(row+1)
@@ -63,7 +63,7 @@ func (b *board) linkNorth(c *cell) {
 	}
 }
 
-func (b *board) linkNorthEast(c *cell) {
+func (b *board) linkNorthEast(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -73,7 +73,7 @@ func (b *board) linkNorthEast(c *cell) {
 	}
 }
 
-func (b *board) linkEast(c *cell) {
+func (b *board) linkEast(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -83,7 +83,7 @@ func (b *board) linkEast(c *cell) {
 	}
 }
 
-func (b *board) linkSouthEast(c *cell) {
+func (b *board) linkSouthEast(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -93,7 +93,7 @@ func (b *board) linkSouthEast(c *cell) {
 	}
 }
 
-func (b *board) linkSouth(c *cell) {
+func (b *board) linkSouth(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -103,7 +103,7 @@ func (b *board) linkSouth(c *cell) {
 	}
 }
 
-func (b *board) linkSouthWest(c *cell) {
+func (b *board) linkSouthWest(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -113,7 +113,7 @@ func (b *board) linkSouthWest(c *cell) {
 	}
 }
 
-func (b *board) linkWest(c *cell) {
+func (b *board) linkWest(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
@@ -123,7 +123,7 @@ func (b *board) linkWest(c *cell) {
 	}
 }
 
-func (b *board) linkNorthWest(c *cell) {
+func (b *board) linkNorthWest(c *Cell) {
 	col := c.pos[0]
 	row := c.pos[1]
 
