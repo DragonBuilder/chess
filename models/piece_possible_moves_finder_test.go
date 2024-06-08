@@ -51,3 +51,27 @@ func TestPawnNextMovesFinder_Find_PawnOnTheEdgeCellItFaces(t *testing.T) {
 
 	assert.Equal(t, 0, len(got2), "pawn on the last cell in the direction it's facing doesn't have any moves")
 }
+
+func TestKingNextMovesFinder_Find(t *testing.T) {
+	b := NewBoard()
+
+	king := NewKing(true)
+
+	b.Put(king, "D5")
+	finder := KingNextMovesFinder{}
+	got := finder.Find(king)
+
+	assert.Equal(t, 8, len(got), "king should have 8 possible moves in all 8 directions")
+}
+
+func TestQueenNextMovesFinder_Find(t *testing.T) {
+	b := NewBoard()
+
+	queen := NewQueen(true)
+
+	b.Put(queen, "E4")
+	finder := QueenNextMovesFinder{}
+	got := finder.Find(queen)
+
+	assert.Equal(t, 27, len(got), "queen can move in all 8 directions untill edge")
+}

@@ -13,8 +13,10 @@ const (
 	NORTH_WEST
 )
 
-type PieceKind int
+type PieceKind string
 
 const (
-	PAWN PieceKind = 1
+	PAWN  PieceKind = "Pawn"
+	KING  PieceKind = "King"
+	QUEEN PieceKind = "Queen"
 )

@@ -40,3 +40,27 @@ func NewPawn(northFacing bool) *Piece {
 		possibilitiesFinder: PawnNextMovesFinder{},
 	}
 }
+
+func NewKing(northFacing bool) *Piece {
+	facing := NORTH
+	if !northFacing {
+		facing = SOUTH
+	}
+	return &Piece{
+		kind:                KING,
+		facing:              facing,
+		possibilitiesFinder: KingNextMovesFinder{},
+	}
+}
+
+func NewQueen(northFacing bool) *Piece {
+	facing := NORTH
+	if !northFacing {
+		facing = SOUTH
+	}
+	return &Piece{
+		kind:                QUEEN,
+		facing:              facing,
+		possibilitiesFinder: QueenNextMovesFinder{},
+	}
+}
