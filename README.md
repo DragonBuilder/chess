@@ -13,10 +13,10 @@
 ## Building from source
 
 ### Dependencies
-1. Go v1.22.2 or greater. (Installation Guide)[https://go.dev/doc/install]
+1. Go v1.22.2 or greater. [Installation Guide](https://go.dev/doc/install)
 2. Git
 
-### Steps to build te binary
+### Steps to build the binary
 
 1. Clone the repo.
 2. run `go build -o chess ./...
@@ -24,7 +24,7 @@
 4. Run `./chess --help` to know how run the executable.
 
 ## Running the app
-The CLI currently only supports a `put` command that simalates and prints out the possible moves of a chess piece when put on a board. It takes 2 arguments :- 
+The CLI currently only supports a `put` command that simulates and prints out the possible moves of a chess piece when put on a board. It takes 2 arguments :- 
    1. Name of the chess piece
    2. The position on the board
 
