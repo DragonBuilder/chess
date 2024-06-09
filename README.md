@@ -27,6 +27,8 @@
 The CLI currently only supports a `put` command that simulates and prints out the possible moves of a chess piece when put on a board. It takes 2 arguments :- 
    1. Name of the chess piece
    2. The position on the board
+   3. 
+NOTE :- Only supports the pieces Pawn, King and Queen.
 
 ### Example usages := 
  
