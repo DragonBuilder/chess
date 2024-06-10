@@ -19,7 +19,7 @@
 ### Steps to build the binary
 
 1. Clone the repo.
-2. run `go build -o chess ./...`
+2. run `go build -o chess ./cmd/cli`
 3. This will create the executable named `chess`.
 4. Run `./chess --help` to know how run the executable.
 
